@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HelloMessage {
-    private String name;
+    private String question;
+    private String answer;
 }

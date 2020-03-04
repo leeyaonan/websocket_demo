@@ -17,8 +17,23 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(1000);
-        return new Greeting("Hello," + HtmlUtils.htmlEscape(message.getName()) + "!");
+        Thread.sleep(1000); // simulated delay
+
+        if (message.getQuestion().contains("知道")) {
+            message.setAnswer("知道");
+        } else if (message.getQuestion().contains("能")) {
+            message.setAnswer("能");
+        } else if (message.getQuestion().contains("会")) {
+            message.setAnswer("会");
+        } else if (message.getQuestion().contains("吗")){
+            String question = message.getQuestion();
+            String answer = question.replace("吗", "").replace("?", "!");
+            message.setAnswer(answer);
+        } else {
+            message.setAnswer("你猜");
+        }
+
+        return new Greeting("A: " + HtmlUtils.htmlEscape(message.getAnswer()) + "!");
     }
 
 }
